@@ -1,0 +1,54 @@
+<div class="container mt-4">
+  <div class="row">
+
+    <div class="col-lg-8 offset-lg-2">
+      <!-- (keyup.enter)="agregarTarea()" -->
+      <input [(ngModel)]="nombreTarea" class="form-control" placeholder="Tarea...">
+      <input [(ngModel)]="description" class="form-control  mt-1" placeholder="Ingresar una descripcion">
+      <button class="btn btn-primary mt-1" (click)="agregarTarea()" type="">Agregar</button>
+
+
+    </div>
+    <div class="col-lg-6 offset-lg-3 mt-4">
+      <div class="card p-2">
+        <h3 *ngIf="listaTareas.length === 0">No hay tareas para mostrar</h3>
+
+        <!-- nuevo card -->
+        <div *ngFor="let tarea of listaTareas; let i = index" class="container">
+
+          <div [ngClass]=" tarea.estado === false ? 'card bg-primary mt-1' :'card text-white
+         bg-success mt-1'" class="card mt-1">
+            <div class="card-header d-flex justify-content-between">
+              <h5 class="">{{tarea.nombre}}</h5>
+              <!-- eliminar tarea  -->
+              <span class="cursor text-danger" (click)="eliminarTarea(i)">
+                <i class="fas fa-trash"></i>
+              </span>
+              <!-- end eliminar tarea  -->
+            </div>
+
+            <div class="card-body">
+              <p class="card-text">{{tarea.description}}</p>
+              <div class="d-flex justify-content-between">
+                <small *ngIf="tarea.estado === true; else Pendiente">Compoletada</small>
+                <ng-template #Pendiente>
+                  <small>
+                    Pendiente
+                  </small>
+                </ng-template>
+
+                <span class="cursor" (click)="actualizarTarea(tarea,i)">
+                  <i [class]="tarea.estado ? 'fas fa-check-circle': 'fas fa-circle active'"></i>
+                  <!-- <i class="far fa-circle"></i> -->
+                  <!-- <i els class="fas fa-check-circle"></i> -->
+                </span>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+              </div>
+            </div>
+          </div>
+          <!-- end nuevo card -->
+
+
+        </div>
+      </div>
+    </div>
